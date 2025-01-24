@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Real time counter</title>
+</head>
+<body>
+    <h1>Real Time Counter</h1>
+    <p id="counter">Waiting for updates...</p>
+    <input type="text" id="messageInput" placeholder="Enter your message">
+    <button onclick="sendMessage()">Send</button>
+    <p id="response"></p>
+
+    <script>
+        const ws = new WebSocket("http://127.0.0.1:8000/ws");
+
+        ws.onmessage = (event) => {
+            document.getElementById('counter').innerText = event.data;
+        };
+
+        function sendMessage(){
+            const input = document.getElementById("messageInput").value;
+            ws.send(input)
+        }
+    </script>
+
+</body>
+</html>
